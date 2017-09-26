@@ -64,7 +64,8 @@ char *encrypt(char *str1, int n)
 
 	for (int i = 0; *(str1 + i) != NULL; i++)
 	{
-		*(str1 + i) += n;
+		if( *(str1 + i) != ' ')
+			*(str1 + i) += n;
 		if (*(str1 + i) > 'Z')
 			*(str1 + i) -= 26;
 	}
