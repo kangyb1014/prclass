@@ -12,7 +12,7 @@ int main(int argc, char* argv[]){
 	}
 
 	FILE *infile;
-	if ((infile = fopen(argv[1], "w")) == NULL)
+	if ((infile = fopen(argv[1], "r")) == NULL)
 	{
 		printf("읽을 파일이 없습니다");
 		exit(1);
@@ -37,19 +37,20 @@ int main(int argc, char* argv[]){
 	int linecnt = 0, wordcnt = 0, charcnt = 0;
 	char str[MAXLINE + 1];
 
-	fgets(str, MAXLINE, infile);
-
-	char *deli = " ,.";
+	char *deli = " ,.\n";
 	char *ptoken;
+	char tempstr[101];
 
 	int linenum = 0;
-	while (!feof(infile))
+	do
 	{
+		fgets(str, MAXLINE, infile);
 		//줄 수 카운트
 		linecnt++;
 
 		//단어 개수 카운트
-		ptoken = strtok(str, deli);
+		strcpy(tempstr, str);
+		ptoken = strtok(tempstr, deli);
 		while (ptoken != NULL)
 		{
 			++wordcnt;
@@ -70,6 +71,8 @@ int main(int argc, char* argv[]){
 				++charcnt;
 				str[i] -= 32;
 			}
+			else if(str[i] >= 30 && str[i] <= 39)
+				++charcnt;
 
 		}
 
@@ -77,15 +80,14 @@ int main(int argc, char* argv[]){
 		fprintf(outfile, "%d ", ++linenum);
 		fputs(str, outfile);
 
-		fgets(str, MAXLINE, infile);
-	}
+	} while (!feof(infile));
 
 
 	printf("<Count Result>\n");
-	printf("Line Count:\t\t %d", linecnt);
-	printf("Word count:\t\t %d", wordcnt);
-	printf("Character count\t %d", charcnt);
-	printf("File saved int %s", outfile);
+	printf("Line Count:\t\t %d\n", linecnt);
+	printf("Word count:\t\t %d\n", wordcnt);
+	printf("Character count:\t %d\n", charcnt);
+	printf("File saved in %s\n", foutname);
 
 	return 0;
 
