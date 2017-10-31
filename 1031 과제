@@ -41,12 +41,9 @@ int main(int argc, char* argv[]){
 	char *ptoken;
 	char tempstr[101];
 
-	int linenum = 0;
 	do
 	{
 		fgets(str, MAXLINE, infile);
-		//줄 수 카운트
-		linecnt++;
 
 		//단어 개수 카운트
 		strcpy(tempstr, str);
@@ -76,8 +73,8 @@ int main(int argc, char* argv[]){
 
 		}
 
-		//outfile에 줄번호와 문자열 출력
-		fprintf(outfile, "%d ", ++linenum);
+		//outfile에 줄번호와 문자열 출력 , 줄 수 카운트
+		fprintf(outfile, "%d ", ++linecnt);
 		fputs(str, outfile);
 
 	} while (!feof(infile));
