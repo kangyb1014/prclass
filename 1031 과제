@@ -68,7 +68,7 @@ int main(int argc, char* argv[]) {
 				++charcnt;
 				str[i] -= 32;
 			}
-			else if (str[i] >= 30 && str[i] <= 39)
+			else if (str[i] >= '0' && str[i] <= '9')
 				++charcnt;
 
 		}
