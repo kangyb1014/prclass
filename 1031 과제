@@ -1,29 +1,27 @@
-//
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-#define MAXLINE 100
+#define MAXLINE 10000
 
-int main(int argc, char* argv[]){
+int main(int argc, char* argv[]) {
 	if (argc < 2)
 	{
-		printf("명령행 인자는 2개 이상이 되어야 합니다");
+		printf("ERROR : 명령행 인자는 2개 이상이 되어야 합니다\n");
 		return 0;
 	}
 
 	FILE *infile;
 	if ((infile = fopen(argv[1], "r")) == NULL)
 	{
-		printf("읽을 파일이 없습니다");
+		printf("읽을 파일이 없습니다\n");
 		exit(1);
 	}
 
 	//출력 파일의 이름을 .rev로 설정
-	char foutname[100];
+	char foutname[MAXLINE + 1];
 	strcpy(foutname, argv[1]);
-	for (int i = 0; i < strlen(foutname); i++){
+	for (int i = strlen(foutname) - 1; i > 0; i--) {
 		if (foutname[i] == '.')
 		{
 			foutname[i + 1] = 'r';
@@ -41,7 +39,7 @@ int main(int argc, char* argv[]){
 
 	char *deli = " ,.\t";
 	char *ptoken;
-	char tempstr[101];
+	char tempstr[MAXLINE+1];
 
 	do
 	{
@@ -56,7 +54,7 @@ int main(int argc, char* argv[]){
 			ptoken = strtok(NULL, deli);
 		}
 
-		
+
 		//소문자는 대문자로, 대문자는 소문자로 변경
 		for (int i = 0; i < strlen(str); i++)
 		{
@@ -70,7 +68,7 @@ int main(int argc, char* argv[]){
 				++charcnt;
 				str[i] -= 32;
 			}
-			else if(str[i] >= 30 && str[i] <= 39)
+			else if (str[i] >= 30 && str[i] <= 39)
 				++charcnt;
 
 		}
