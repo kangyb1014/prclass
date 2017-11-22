@@ -1,0 +1,40 @@
+#include <stdio.h>
+#include <cstdlib>
+#include <ctime>
+
+#define N 16
+
+int arr[N][N];
+
+int main()
+{
+	FILE *fp;
+	if ((fp = fopen("sample.txt", "w")) == NULL)
+	{
+		puts("Failed");
+		return 0;
+	}
+	fprintf(fp, "%d\n",N);
+	
+	/* 테스트 코드를 일정하게 증가/감소하는 값으로 설정할 때
+	for (int i = N; i > 0; i--)
+	{
+		for (int j = N+i; j > i; j--)
+			fprintf(fp,"%d ", j-2);
+		fprintf(fp,"\n");
+	}*/
+
+	srand((unsigned int)time(NULL));
+	for (int i = 0; i < N; i++)
+	{
+		for (int j = i + 1; j < N; j++)
+			arr[i][j] = arr[j][i] = (rand() % 100) + 1;
+	}
+
+	for (int i = 0; i < N; i++)
+	{
+		for (int j = 0; j < N; j++)
+			fprintf(fp, "%d ", arr[i][j]);
+		fprintf(fp, "\n");
+	}
+}
