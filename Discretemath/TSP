@@ -2,23 +2,24 @@
 #include <algorithm>
 #define  _MAX 999999
 
+const int V = 22;
 using namespace std;
 
 int n;
-int edge[16][16];
-int cache[65536][16];
+int edge[V][V];
+int cache[1 << V][V] = { 0, };
 //cache는 현재 노드에서 0011...에서 나머지를 갔을 때 최소 값
 
 //0번노드를 갔으면 000...001
 //1번노드를 갔으면 000...011
 
-int TSP(int visit , int curnode)
+int TSP(int visit, int curnode)
 {
-	if (visit == (1 << n) - 1)
+	if (visit == (1 << n) - 1)	//모두 방문했을 경우 현재 노드에서 0까지 거리 리턴
 	{
 		return edge[curnode][0];
 	}
-	
+
 	if (cache[visit][curnode] != 0)
 	{
 		return cache[visit][curnode];
@@ -32,9 +33,9 @@ int TSP(int visit , int curnode)
 		if ((visit & (1 << i)) == 0)
 		{
 			temp = 1 << i;
-			ret = min(ret, TSP(visit + temp , i) + edge[curnode][i]);
-		}	
-		cache[visit][curnode] =  ret;
+			ret = min(ret, TSP(visit + temp, i) + edge[curnode][i]);
+		}
+		cache[visit][curnode] = ret;
 	}
 
 	return ret;
@@ -42,12 +43,15 @@ int TSP(int visit , int curnode)
 
 int main()
 {
-	int temp=1;
+	int temp = 1;
 	cin >> n;
+
 	for (int i = 0; i < n; i++)
 	{
 		for (int j = 0; j < n; j++)
+		{
 			cin >> edge[i][j];
+		}
 	}
 	cout << TSP(1, 0);
 
